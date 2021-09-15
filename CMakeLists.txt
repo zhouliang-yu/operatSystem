@@ -1,0 +1,10 @@
+# cmake_minimum_required(VERSION <specify CMake version here>)
+project(operatSystem C)
+
+set(CMAKE_C_STANDARD 11)
+
+add_executable(operatSystem
+        a.c
+        ctu.c
+        lab0.c
+        printBytes.c)

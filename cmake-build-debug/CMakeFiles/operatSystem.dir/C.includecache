@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/d/operatSystem/a.c
+stdio.h
+-
+stdlib.h
+-
+
+/mnt/d/operatSystem/ctu.c
+stdio.h
+-
+stdlib.h
+-
+
+/mnt/d/operatSystem/lab0.c
+assert.h
+-
+stdio.h
+-
+stdlib.h
+-
+time.h
+-
+
+/mnt/d/operatSystem/printBytes.c
+stdio.h
+-
+stdlib.h
+-
+
