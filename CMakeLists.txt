@@ -11,3 +11,4 @@ add_executable(operatSystem
 
 add_executable(execve Tutorial_1_Sample_Code/execve.c)
 add_executable(forkUsing forkUsing.c)
+add_executable(waitUsing waitUsing.c)

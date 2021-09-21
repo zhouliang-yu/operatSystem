@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named waitUsing
+
+# Build rule for target.
+waitUsing: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 waitUsing
+.PHONY : waitUsing
+
+# fast build rule for target.
+waitUsing/fast:
+	$(MAKE) -f CMakeFiles/waitUsing.dir/build.make CMakeFiles/waitUsing.dir/build
+.PHONY : waitUsing/fast
+
+#=============================================================================
 # Target rules for targets named forkUsing
 
 # Build rule for target.
@@ -311,6 +324,33 @@ printBytes.c.s:
 	$(MAKE) -f CMakeFiles/operatSystem.dir/build.make CMakeFiles/operatSystem.dir/printBytes.c.s
 .PHONY : printBytes.c.s
 
+waitUsing.o: waitUsing.c.o
+
+.PHONY : waitUsing.o
+
+# target to build an object file
+waitUsing.c.o:
+	$(MAKE) -f CMakeFiles/waitUsing.dir/build.make CMakeFiles/waitUsing.dir/waitUsing.c.o
+.PHONY : waitUsing.c.o
+
+waitUsing.i: waitUsing.c.i
+
+.PHONY : waitUsing.i
+
+# target to preprocess a source file
+waitUsing.c.i:
+	$(MAKE) -f CMakeFiles/waitUsing.dir/build.make CMakeFiles/waitUsing.dir/waitUsing.c.i
+.PHONY : waitUsing.c.i
+
+waitUsing.s: waitUsing.c.s
+
+.PHONY : waitUsing.s
+
+# target to generate assembly for a file
+waitUsing.c.s:
+	$(MAKE) -f CMakeFiles/waitUsing.dir/build.make CMakeFiles/waitUsing.dir/waitUsing.c.s
+.PHONY : waitUsing.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -318,6 +358,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... waitUsing"
 	@echo "... rebuild_cache"
 	@echo "... forkUsing"
 	@echo "... execve"
@@ -340,6 +381,9 @@ help:
 	@echo "... printBytes.o"
 	@echo "... printBytes.i"
 	@echo "... printBytes.s"
+	@echo "... waitUsing.o"
+	@echo "... waitUsing.i"
+	@echo "... waitUsing.s"
 .PHONY : help
 
 

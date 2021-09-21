@@ -53,6 +53,7 @@ CMAKE_BINARY_DIR = /mnt/d/operatSystem/cmake-build-debug
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/waitUsing.dir/all
 all: CMakeFiles/forkUsing.dir/all
 all: CMakeFiles/execve.dir/all
 all: CMakeFiles/operatSystem.dir/all
@@ -65,11 +66,39 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/waitUsing.dir/clean
 clean: CMakeFiles/forkUsing.dir/clean
 clean: CMakeFiles/execve.dir/clean
 clean: CMakeFiles/operatSystem.dir/clean
 
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/waitUsing.dir
+
+# All Build rule for target.
+CMakeFiles/waitUsing.dir/all:
+	$(MAKE) -f CMakeFiles/waitUsing.dir/build.make CMakeFiles/waitUsing.dir/depend
+	$(MAKE) -f CMakeFiles/waitUsing.dir/build.make CMakeFiles/waitUsing.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/d/operatSystem/cmake-build-debug/CMakeFiles --progress-num=10,11 "Built target waitUsing"
+.PHONY : CMakeFiles/waitUsing.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/waitUsing.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/operatSystem/cmake-build-debug/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/waitUsing.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/operatSystem/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/waitUsing.dir/rule
+
+# Convenience name for target.
+waitUsing: CMakeFiles/waitUsing.dir/rule
+
+.PHONY : waitUsing
+
+# clean rule for target.
+CMakeFiles/waitUsing.dir/clean:
+	$(MAKE) -f CMakeFiles/waitUsing.dir/build.make CMakeFiles/waitUsing.dir/clean
+.PHONY : CMakeFiles/waitUsing.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/forkUsing.dir

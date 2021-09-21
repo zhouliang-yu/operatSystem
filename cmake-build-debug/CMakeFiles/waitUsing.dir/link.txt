@@ -1,0 +1,1 @@
+/usr/bin/cc -g  -rdynamic CMakeFiles/waitUsing.dir/waitUsing.c.o  -o waitUsing 
