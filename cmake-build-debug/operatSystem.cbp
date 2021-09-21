@@ -27,6 +27,44 @@
 					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="Multiplefork">
+				<Option output="/mnt/d/operatSystem/cmake-build-debug/Multiplefork" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 Multiplefork"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Multiplefork/fast">
+				<Option output="/mnt/d/operatSystem/cmake-build-debug/Multiplefork" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 Multiplefork/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="waitUsing">
 				<Option output="/mnt/d/operatSystem/cmake-build-debug/waitUsing" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
@@ -228,6 +266,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/mnt/d/operatSystem/Multiplefork.c">
+			<Option target="Multiplefork"/>
+		</Unit>
 		<Unit filename="/mnt/d/operatSystem/Tutorial_1_Sample_Code/execve.c">
 			<Option target="execve"/>
 		</Unit>

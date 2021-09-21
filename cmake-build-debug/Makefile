@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named Multiplefork
+
+# Build rule for target.
+Multiplefork: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Multiplefork
+.PHONY : Multiplefork
+
+# fast build rule for target.
+Multiplefork/fast:
+	$(MAKE) -f CMakeFiles/Multiplefork.dir/build.make CMakeFiles/Multiplefork.dir/build
+.PHONY : Multiplefork/fast
+
+#=============================================================================
 # Target rules for targets named waitUsing
 
 # Build rule for target.
@@ -174,6 +187,33 @@ operatSystem: cmake_check_build_system
 operatSystem/fast:
 	$(MAKE) -f CMakeFiles/operatSystem.dir/build.make CMakeFiles/operatSystem.dir/build
 .PHONY : operatSystem/fast
+
+Multiplefork.o: Multiplefork.c.o
+
+.PHONY : Multiplefork.o
+
+# target to build an object file
+Multiplefork.c.o:
+	$(MAKE) -f CMakeFiles/Multiplefork.dir/build.make CMakeFiles/Multiplefork.dir/Multiplefork.c.o
+.PHONY : Multiplefork.c.o
+
+Multiplefork.i: Multiplefork.c.i
+
+.PHONY : Multiplefork.i
+
+# target to preprocess a source file
+Multiplefork.c.i:
+	$(MAKE) -f CMakeFiles/Multiplefork.dir/build.make CMakeFiles/Multiplefork.dir/Multiplefork.c.i
+.PHONY : Multiplefork.c.i
+
+Multiplefork.s: Multiplefork.c.s
+
+.PHONY : Multiplefork.s
+
+# target to generate assembly for a file
+Multiplefork.c.s:
+	$(MAKE) -f CMakeFiles/Multiplefork.dir/build.make CMakeFiles/Multiplefork.dir/Multiplefork.c.s
+.PHONY : Multiplefork.c.s
 
 Tutorial_1_Sample_Code/execve.o: Tutorial_1_Sample_Code/execve.c.o
 
@@ -398,12 +438,16 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... Multiplefork"
 	@echo "... waitUsing"
 	@echo "... rebuild_cache"
 	@echo "... getPidUsing"
 	@echo "... forkUsing"
 	@echo "... execve"
 	@echo "... operatSystem"
+	@echo "... Multiplefork.o"
+	@echo "... Multiplefork.i"
+	@echo "... Multiplefork.s"
 	@echo "... Tutorial_1_Sample_Code/execve.o"
 	@echo "... Tutorial_1_Sample_Code/execve.i"
 	@echo "... Tutorial_1_Sample_Code/execve.s"

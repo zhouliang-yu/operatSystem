@@ -1,4 +1,5 @@
 /mnt/d/operatSystem/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/d/operatSystem/cmake-build-debug/CMakeFiles/Multiplefork.dir
 /mnt/d/operatSystem/cmake-build-debug/CMakeFiles/waitUsing.dir
 /mnt/d/operatSystem/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 /mnt/d/operatSystem/cmake-build-debug/CMakeFiles/getPidUsing.dir

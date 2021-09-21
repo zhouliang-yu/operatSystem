@@ -44,6 +44,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/Multiplefork.dir/DependInfo.cmake"
   "CMakeFiles/waitUsing.dir/DependInfo.cmake"
   "CMakeFiles/getPidUsing.dir/DependInfo.cmake"
   "CMakeFiles/forkUsing.dir/DependInfo.cmake"
