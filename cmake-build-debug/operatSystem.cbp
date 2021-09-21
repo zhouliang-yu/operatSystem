@@ -17,6 +17,16 @@
 					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
 				<Option type="4"/>
@@ -27,11 +37,39 @@
 					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="edit_cache">
+			<Target title="forkUsing">
+				<Option output="/mnt/d/operatSystem/cmake-build-debug/forkUsing" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
-				<Option type="4"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 forkUsing"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="forkUsing/fast">
+				<Option output="/mnt/d/operatSystem/cmake-build-debug/forkUsing" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 forkUsing/fast"/>
 					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -122,6 +160,9 @@
 		</Unit>
 		<Unit filename="/mnt/d/operatSystem/ctu.c">
 			<Option target="operatSystem"/>
+		</Unit>
+		<Unit filename="/mnt/d/operatSystem/forkUsing.c">
+			<Option target="forkUsing"/>
 		</Unit>
 		<Unit filename="/mnt/d/operatSystem/lab0.c">
 			<Option target="operatSystem"/>

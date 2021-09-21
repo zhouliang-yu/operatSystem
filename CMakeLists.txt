@@ -10,3 +10,4 @@ add_executable(operatSystem
         printBytes.c)
 
 add_executable(execve Tutorial_1_Sample_Code/execve.c)
+add_executable(forkUsing forkUsing.c)

@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /mnt/d/operatSystem/cmake-build-debug
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -77,6 +66,17 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -109,6 +109,19 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named forkUsing
+
+# Build rule for target.
+forkUsing: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 forkUsing
+.PHONY : forkUsing
+
+# fast build rule for target.
+forkUsing/fast:
+	$(MAKE) -f CMakeFiles/forkUsing.dir/build.make CMakeFiles/forkUsing.dir/build
+.PHONY : forkUsing/fast
 
 #=============================================================================
 # Target rules for targets named execve
@@ -217,6 +230,33 @@ ctu.c.s:
 	$(MAKE) -f CMakeFiles/operatSystem.dir/build.make CMakeFiles/operatSystem.dir/ctu.c.s
 .PHONY : ctu.c.s
 
+forkUsing.o: forkUsing.c.o
+
+.PHONY : forkUsing.o
+
+# target to build an object file
+forkUsing.c.o:
+	$(MAKE) -f CMakeFiles/forkUsing.dir/build.make CMakeFiles/forkUsing.dir/forkUsing.c.o
+.PHONY : forkUsing.c.o
+
+forkUsing.i: forkUsing.c.i
+
+.PHONY : forkUsing.i
+
+# target to preprocess a source file
+forkUsing.c.i:
+	$(MAKE) -f CMakeFiles/forkUsing.dir/build.make CMakeFiles/forkUsing.dir/forkUsing.c.i
+.PHONY : forkUsing.c.i
+
+forkUsing.s: forkUsing.c.s
+
+.PHONY : forkUsing.s
+
+# target to generate assembly for a file
+forkUsing.c.s:
+	$(MAKE) -f CMakeFiles/forkUsing.dir/build.make CMakeFiles/forkUsing.dir/forkUsing.c.s
+.PHONY : forkUsing.c.s
+
 lab0.o: lab0.c.o
 
 .PHONY : lab0.o
@@ -277,8 +317,9 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... forkUsing"
 	@echo "... execve"
 	@echo "... operatSystem"
 	@echo "... Tutorial_1_Sample_Code/execve.o"
@@ -290,6 +331,9 @@ help:
 	@echo "... ctu.o"
 	@echo "... ctu.i"
 	@echo "... ctu.s"
+	@echo "... forkUsing.o"
+	@echo "... forkUsing.i"
+	@echo "... forkUsing.s"
 	@echo "... lab0.o"
 	@echo "... lab0.i"
 	@echo "... lab0.s"
