@@ -1,0 +1,1 @@
+/usr/bin/cc -g  -rdynamic CMakeFiles/getPidUsing.dir/getPidUsing.c.o  -o getPidUsing 

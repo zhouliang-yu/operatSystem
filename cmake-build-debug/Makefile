@@ -124,6 +124,19 @@ waitUsing/fast:
 .PHONY : waitUsing/fast
 
 #=============================================================================
+# Target rules for targets named getPidUsing
+
+# Build rule for target.
+getPidUsing: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 getPidUsing
+.PHONY : getPidUsing
+
+# fast build rule for target.
+getPidUsing/fast:
+	$(MAKE) -f CMakeFiles/getPidUsing.dir/build.make CMakeFiles/getPidUsing.dir/build
+.PHONY : getPidUsing/fast
+
+#=============================================================================
 # Target rules for targets named forkUsing
 
 # Build rule for target.
@@ -270,6 +283,33 @@ forkUsing.c.s:
 	$(MAKE) -f CMakeFiles/forkUsing.dir/build.make CMakeFiles/forkUsing.dir/forkUsing.c.s
 .PHONY : forkUsing.c.s
 
+getPidUsing.o: getPidUsing.c.o
+
+.PHONY : getPidUsing.o
+
+# target to build an object file
+getPidUsing.c.o:
+	$(MAKE) -f CMakeFiles/getPidUsing.dir/build.make CMakeFiles/getPidUsing.dir/getPidUsing.c.o
+.PHONY : getPidUsing.c.o
+
+getPidUsing.i: getPidUsing.c.i
+
+.PHONY : getPidUsing.i
+
+# target to preprocess a source file
+getPidUsing.c.i:
+	$(MAKE) -f CMakeFiles/getPidUsing.dir/build.make CMakeFiles/getPidUsing.dir/getPidUsing.c.i
+.PHONY : getPidUsing.c.i
+
+getPidUsing.s: getPidUsing.c.s
+
+.PHONY : getPidUsing.s
+
+# target to generate assembly for a file
+getPidUsing.c.s:
+	$(MAKE) -f CMakeFiles/getPidUsing.dir/build.make CMakeFiles/getPidUsing.dir/getPidUsing.c.s
+.PHONY : getPidUsing.c.s
+
 lab0.o: lab0.c.o
 
 .PHONY : lab0.o
@@ -360,6 +400,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... waitUsing"
 	@echo "... rebuild_cache"
+	@echo "... getPidUsing"
 	@echo "... forkUsing"
 	@echo "... execve"
 	@echo "... operatSystem"
@@ -375,6 +416,9 @@ help:
 	@echo "... forkUsing.o"
 	@echo "... forkUsing.i"
 	@echo "... forkUsing.s"
+	@echo "... getPidUsing.o"
+	@echo "... getPidUsing.i"
+	@echo "... getPidUsing.s"
 	@echo "... lab0.o"
 	@echo "... lab0.i"
 	@echo "... lab0.s"
