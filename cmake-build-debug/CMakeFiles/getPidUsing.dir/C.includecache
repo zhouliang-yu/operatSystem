@@ -15,4 +15,6 @@ stdlib.h
 -
 unistd.h
 -
+sys/wait.h
+-
 
