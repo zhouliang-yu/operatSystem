@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/d/operatSystem/Tutorial_1_Sample_Code/execve.c
+stdio.h
+-
+stdlib.h
+-
+unistd.h
+-
+string.h
+-
+wait.h
+-
+

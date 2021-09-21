@@ -53,6 +53,7 @@ CMAKE_BINARY_DIR = /mnt/d/operatSystem/cmake-build-debug
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/execve.dir/all
 all: CMakeFiles/operatSystem.dir/all
 
 .PHONY : all
@@ -63,9 +64,37 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/execve.dir/clean
 clean: CMakeFiles/operatSystem.dir/clean
 
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/execve.dir
+
+# All Build rule for target.
+CMakeFiles/execve.dir/all:
+	$(MAKE) -f CMakeFiles/execve.dir/build.make CMakeFiles/execve.dir/depend
+	$(MAKE) -f CMakeFiles/execve.dir/build.make CMakeFiles/execve.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/d/operatSystem/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target execve"
+.PHONY : CMakeFiles/execve.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/execve.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/operatSystem/cmake-build-debug/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/execve.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/operatSystem/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/execve.dir/rule
+
+# Convenience name for target.
+execve: CMakeFiles/execve.dir/rule
+
+.PHONY : execve
+
+# clean rule for target.
+CMakeFiles/execve.dir/clean:
+	$(MAKE) -f CMakeFiles/execve.dir/build.make CMakeFiles/execve.dir/clean
+.PHONY : CMakeFiles/execve.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/operatSystem.dir
@@ -74,7 +103,7 @@ clean: CMakeFiles/operatSystem.dir/clean
 CMakeFiles/operatSystem.dir/all:
 	$(MAKE) -f CMakeFiles/operatSystem.dir/build.make CMakeFiles/operatSystem.dir/depend
 	$(MAKE) -f CMakeFiles/operatSystem.dir/build.make CMakeFiles/operatSystem.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/d/operatSystem/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5 "Built target operatSystem"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/d/operatSystem/cmake-build-debug/CMakeFiles --progress-num=3,4,5,6,7 "Built target operatSystem"
 .PHONY : CMakeFiles/operatSystem.dir/all
 
 # Build rule for subdir invocation for target.

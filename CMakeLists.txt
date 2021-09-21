@@ -8,3 +8,5 @@ add_executable(operatSystem
         ctu.c
         lab0.c
         printBytes.c)
+
+add_executable(execve Tutorial_1_Sample_Code/execve.c)

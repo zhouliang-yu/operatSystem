@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
     
         //Parent process
         else{
-            //sleep(3);
+//            sleep(3);
             printf("I'm the Parent Process, my pid = %d\n",getpid());
             exit(0);
         }

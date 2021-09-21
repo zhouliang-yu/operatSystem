@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named execve
+
+# Build rule for target.
+execve: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 execve
+.PHONY : execve
+
+# fast build rule for target.
+execve/fast:
+	$(MAKE) -f CMakeFiles/execve.dir/build.make CMakeFiles/execve.dir/build
+.PHONY : execve/fast
+
+#=============================================================================
 # Target rules for targets named operatSystem
 
 # Build rule for target.
@@ -122,6 +135,33 @@ operatSystem: cmake_check_build_system
 operatSystem/fast:
 	$(MAKE) -f CMakeFiles/operatSystem.dir/build.make CMakeFiles/operatSystem.dir/build
 .PHONY : operatSystem/fast
+
+Tutorial_1_Sample_Code/execve.o: Tutorial_1_Sample_Code/execve.c.o
+
+.PHONY : Tutorial_1_Sample_Code/execve.o
+
+# target to build an object file
+Tutorial_1_Sample_Code/execve.c.o:
+	$(MAKE) -f CMakeFiles/execve.dir/build.make CMakeFiles/execve.dir/Tutorial_1_Sample_Code/execve.c.o
+.PHONY : Tutorial_1_Sample_Code/execve.c.o
+
+Tutorial_1_Sample_Code/execve.i: Tutorial_1_Sample_Code/execve.c.i
+
+.PHONY : Tutorial_1_Sample_Code/execve.i
+
+# target to preprocess a source file
+Tutorial_1_Sample_Code/execve.c.i:
+	$(MAKE) -f CMakeFiles/execve.dir/build.make CMakeFiles/execve.dir/Tutorial_1_Sample_Code/execve.c.i
+.PHONY : Tutorial_1_Sample_Code/execve.c.i
+
+Tutorial_1_Sample_Code/execve.s: Tutorial_1_Sample_Code/execve.c.s
+
+.PHONY : Tutorial_1_Sample_Code/execve.s
+
+# target to generate assembly for a file
+Tutorial_1_Sample_Code/execve.c.s:
+	$(MAKE) -f CMakeFiles/execve.dir/build.make CMakeFiles/execve.dir/Tutorial_1_Sample_Code/execve.c.s
+.PHONY : Tutorial_1_Sample_Code/execve.c.s
 
 a.o: a.c.o
 
@@ -239,7 +279,11 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... execve"
 	@echo "... operatSystem"
+	@echo "... Tutorial_1_Sample_Code/execve.o"
+	@echo "... Tutorial_1_Sample_Code/execve.i"
+	@echo "... Tutorial_1_Sample_Code/execve.s"
 	@echo "... a.o"
 	@echo "... a.i"
 	@echo "... a.s"
