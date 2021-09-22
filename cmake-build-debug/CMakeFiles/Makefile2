@@ -53,6 +53,7 @@ CMAKE_BINARY_DIR = /mnt/d/operatSystem/cmake-build-debug
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/pipeUsing.dir/all
 all: CMakeFiles/Multiplefork.dir/all
 all: CMakeFiles/waitUsing.dir/all
 all: CMakeFiles/getPidUsing.dir/all
@@ -68,6 +69,7 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/pipeUsing.dir/clean
 clean: CMakeFiles/Multiplefork.dir/clean
 clean: CMakeFiles/waitUsing.dir/clean
 clean: CMakeFiles/getPidUsing.dir/clean
@@ -76,6 +78,33 @@ clean: CMakeFiles/execve.dir/clean
 clean: CMakeFiles/operatSystem.dir/clean
 
 .PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/pipeUsing.dir
+
+# All Build rule for target.
+CMakeFiles/pipeUsing.dir/all:
+	$(MAKE) -f CMakeFiles/pipeUsing.dir/build.make CMakeFiles/pipeUsing.dir/depend
+	$(MAKE) -f CMakeFiles/pipeUsing.dir/build.make CMakeFiles/pipeUsing.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/d/operatSystem/cmake-build-debug/CMakeFiles --progress-num=14,15 "Built target pipeUsing"
+.PHONY : CMakeFiles/pipeUsing.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/pipeUsing.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/operatSystem/cmake-build-debug/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/pipeUsing.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/operatSystem/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/pipeUsing.dir/rule
+
+# Convenience name for target.
+pipeUsing: CMakeFiles/pipeUsing.dir/rule
+
+.PHONY : pipeUsing
+
+# clean rule for target.
+CMakeFiles/pipeUsing.dir/clean:
+	$(MAKE) -f CMakeFiles/pipeUsing.dir/build.make CMakeFiles/pipeUsing.dir/clean
+.PHONY : CMakeFiles/pipeUsing.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/Multiplefork.dir
@@ -111,7 +140,7 @@ CMakeFiles/Multiplefork.dir/clean:
 CMakeFiles/waitUsing.dir/all:
 	$(MAKE) -f CMakeFiles/waitUsing.dir/build.make CMakeFiles/waitUsing.dir/depend
 	$(MAKE) -f CMakeFiles/waitUsing.dir/build.make CMakeFiles/waitUsing.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/d/operatSystem/cmake-build-debug/CMakeFiles --progress-num=14,15 "Built target waitUsing"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/d/operatSystem/cmake-build-debug/CMakeFiles --progress-num=16,17 "Built target waitUsing"
 .PHONY : CMakeFiles/waitUsing.dir/all
 
 # Build rule for subdir invocation for target.

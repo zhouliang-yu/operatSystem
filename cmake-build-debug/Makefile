@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named pipeUsing
+
+# Build rule for target.
+pipeUsing: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pipeUsing
+.PHONY : pipeUsing
+
+# fast build rule for target.
+pipeUsing/fast:
+	$(MAKE) -f CMakeFiles/pipeUsing.dir/build.make CMakeFiles/pipeUsing.dir/build
+.PHONY : pipeUsing/fast
+
+#=============================================================================
 # Target rules for targets named Multiplefork
 
 # Build rule for target.
@@ -377,6 +390,33 @@ lab0.c.s:
 	$(MAKE) -f CMakeFiles/operatSystem.dir/build.make CMakeFiles/operatSystem.dir/lab0.c.s
 .PHONY : lab0.c.s
 
+pipeUsing.o: pipeUsing.c.o
+
+.PHONY : pipeUsing.o
+
+# target to build an object file
+pipeUsing.c.o:
+	$(MAKE) -f CMakeFiles/pipeUsing.dir/build.make CMakeFiles/pipeUsing.dir/pipeUsing.c.o
+.PHONY : pipeUsing.c.o
+
+pipeUsing.i: pipeUsing.c.i
+
+.PHONY : pipeUsing.i
+
+# target to preprocess a source file
+pipeUsing.c.i:
+	$(MAKE) -f CMakeFiles/pipeUsing.dir/build.make CMakeFiles/pipeUsing.dir/pipeUsing.c.i
+.PHONY : pipeUsing.c.i
+
+pipeUsing.s: pipeUsing.c.s
+
+.PHONY : pipeUsing.s
+
+# target to generate assembly for a file
+pipeUsing.c.s:
+	$(MAKE) -f CMakeFiles/pipeUsing.dir/build.make CMakeFiles/pipeUsing.dir/pipeUsing.c.s
+.PHONY : pipeUsing.c.s
+
 printBytes.o: printBytes.c.o
 
 .PHONY : printBytes.o
@@ -437,6 +477,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... pipeUsing"
 	@echo "... edit_cache"
 	@echo "... Multiplefork"
 	@echo "... waitUsing"
@@ -466,6 +507,9 @@ help:
 	@echo "... lab0.o"
 	@echo "... lab0.i"
 	@echo "... lab0.s"
+	@echo "... pipeUsing.o"
+	@echo "... pipeUsing.i"
+	@echo "... pipeUsing.s"
 	@echo "... printBytes.o"
 	@echo "... printBytes.i"
 	@echo "... printBytes.s"
