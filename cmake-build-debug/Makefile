@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named ProcessTermination_1
+
+# Build rule for target.
+ProcessTermination_1: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ProcessTermination_1
+.PHONY : ProcessTermination_1
+
+# fast build rule for target.
+ProcessTermination_1/fast:
+	$(MAKE) -f CMakeFiles/ProcessTermination_1.dir/build.make CMakeFiles/ProcessTermination_1.dir/build
+.PHONY : ProcessTermination_1/fast
+
+#=============================================================================
 # Target rules for targets named pipeUsing
 
 # Build rule for target.
@@ -124,6 +137,19 @@ pipeUsing/fast:
 .PHONY : pipeUsing/fast
 
 #=============================================================================
+# Target rules for targets named Signal
+
+# Build rule for target.
+Signal: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Signal
+.PHONY : Signal
+
+# fast build rule for target.
+Signal/fast:
+	$(MAKE) -f CMakeFiles/Signal.dir/build.make CMakeFiles/Signal.dir/build
+.PHONY : Signal/fast
+
+#=============================================================================
 # Target rules for targets named Multiplefork
 
 # Build rule for target.
@@ -135,6 +161,19 @@ Multiplefork: cmake_check_build_system
 Multiplefork/fast:
 	$(MAKE) -f CMakeFiles/Multiplefork.dir/build.make CMakeFiles/Multiplefork.dir/build
 .PHONY : Multiplefork/fast
+
+#=============================================================================
+# Target rules for targets named ParentAndChild_2
+
+# Build rule for target.
+ParentAndChild_2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ParentAndChild_2
+.PHONY : ParentAndChild_2
+
+# fast build rule for target.
+ParentAndChild_2/fast:
+	$(MAKE) -f CMakeFiles/ParentAndChild_2.dir/build.make CMakeFiles/ParentAndChild_2.dir/build
+.PHONY : ParentAndChild_2/fast
 
 #=============================================================================
 # Target rules for targets named waitUsing
@@ -227,6 +266,87 @@ Multiplefork.s: Multiplefork.c.s
 Multiplefork.c.s:
 	$(MAKE) -f CMakeFiles/Multiplefork.dir/build.make CMakeFiles/Multiplefork.dir/Multiplefork.c.s
 .PHONY : Multiplefork.c.s
+
+Tutorial_1_Sample_Code/ParentAndChild_2.o: Tutorial_1_Sample_Code/ParentAndChild_2.c.o
+
+.PHONY : Tutorial_1_Sample_Code/ParentAndChild_2.o
+
+# target to build an object file
+Tutorial_1_Sample_Code/ParentAndChild_2.c.o:
+	$(MAKE) -f CMakeFiles/ParentAndChild_2.dir/build.make CMakeFiles/ParentAndChild_2.dir/Tutorial_1_Sample_Code/ParentAndChild_2.c.o
+.PHONY : Tutorial_1_Sample_Code/ParentAndChild_2.c.o
+
+Tutorial_1_Sample_Code/ParentAndChild_2.i: Tutorial_1_Sample_Code/ParentAndChild_2.c.i
+
+.PHONY : Tutorial_1_Sample_Code/ParentAndChild_2.i
+
+# target to preprocess a source file
+Tutorial_1_Sample_Code/ParentAndChild_2.c.i:
+	$(MAKE) -f CMakeFiles/ParentAndChild_2.dir/build.make CMakeFiles/ParentAndChild_2.dir/Tutorial_1_Sample_Code/ParentAndChild_2.c.i
+.PHONY : Tutorial_1_Sample_Code/ParentAndChild_2.c.i
+
+Tutorial_1_Sample_Code/ParentAndChild_2.s: Tutorial_1_Sample_Code/ParentAndChild_2.c.s
+
+.PHONY : Tutorial_1_Sample_Code/ParentAndChild_2.s
+
+# target to generate assembly for a file
+Tutorial_1_Sample_Code/ParentAndChild_2.c.s:
+	$(MAKE) -f CMakeFiles/ParentAndChild_2.dir/build.make CMakeFiles/ParentAndChild_2.dir/Tutorial_1_Sample_Code/ParentAndChild_2.c.s
+.PHONY : Tutorial_1_Sample_Code/ParentAndChild_2.c.s
+
+Tutorial_1_Sample_Code/ProcessTermination_1.o: Tutorial_1_Sample_Code/ProcessTermination_1.c.o
+
+.PHONY : Tutorial_1_Sample_Code/ProcessTermination_1.o
+
+# target to build an object file
+Tutorial_1_Sample_Code/ProcessTermination_1.c.o:
+	$(MAKE) -f CMakeFiles/ProcessTermination_1.dir/build.make CMakeFiles/ProcessTermination_1.dir/Tutorial_1_Sample_Code/ProcessTermination_1.c.o
+.PHONY : Tutorial_1_Sample_Code/ProcessTermination_1.c.o
+
+Tutorial_1_Sample_Code/ProcessTermination_1.i: Tutorial_1_Sample_Code/ProcessTermination_1.c.i
+
+.PHONY : Tutorial_1_Sample_Code/ProcessTermination_1.i
+
+# target to preprocess a source file
+Tutorial_1_Sample_Code/ProcessTermination_1.c.i:
+	$(MAKE) -f CMakeFiles/ProcessTermination_1.dir/build.make CMakeFiles/ProcessTermination_1.dir/Tutorial_1_Sample_Code/ProcessTermination_1.c.i
+.PHONY : Tutorial_1_Sample_Code/ProcessTermination_1.c.i
+
+Tutorial_1_Sample_Code/ProcessTermination_1.s: Tutorial_1_Sample_Code/ProcessTermination_1.c.s
+
+.PHONY : Tutorial_1_Sample_Code/ProcessTermination_1.s
+
+# target to generate assembly for a file
+Tutorial_1_Sample_Code/ProcessTermination_1.c.s:
+	$(MAKE) -f CMakeFiles/ProcessTermination_1.dir/build.make CMakeFiles/ProcessTermination_1.dir/Tutorial_1_Sample_Code/ProcessTermination_1.c.s
+.PHONY : Tutorial_1_Sample_Code/ProcessTermination_1.c.s
+
+Tutorial_1_Sample_Code/Signal.o: Tutorial_1_Sample_Code/Signal.c.o
+
+.PHONY : Tutorial_1_Sample_Code/Signal.o
+
+# target to build an object file
+Tutorial_1_Sample_Code/Signal.c.o:
+	$(MAKE) -f CMakeFiles/Signal.dir/build.make CMakeFiles/Signal.dir/Tutorial_1_Sample_Code/Signal.c.o
+.PHONY : Tutorial_1_Sample_Code/Signal.c.o
+
+Tutorial_1_Sample_Code/Signal.i: Tutorial_1_Sample_Code/Signal.c.i
+
+.PHONY : Tutorial_1_Sample_Code/Signal.i
+
+# target to preprocess a source file
+Tutorial_1_Sample_Code/Signal.c.i:
+	$(MAKE) -f CMakeFiles/Signal.dir/build.make CMakeFiles/Signal.dir/Tutorial_1_Sample_Code/Signal.c.i
+.PHONY : Tutorial_1_Sample_Code/Signal.c.i
+
+Tutorial_1_Sample_Code/Signal.s: Tutorial_1_Sample_Code/Signal.c.s
+
+.PHONY : Tutorial_1_Sample_Code/Signal.s
+
+# target to generate assembly for a file
+Tutorial_1_Sample_Code/Signal.c.s:
+	$(MAKE) -f CMakeFiles/Signal.dir/build.make CMakeFiles/Signal.dir/Tutorial_1_Sample_Code/Signal.c.s
+.PHONY : Tutorial_1_Sample_Code/Signal.c.s
 
 Tutorial_1_Sample_Code/execve.o: Tutorial_1_Sample_Code/execve.c.o
 
@@ -477,9 +597,12 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... ProcessTermination_1"
 	@echo "... pipeUsing"
 	@echo "... edit_cache"
+	@echo "... Signal"
 	@echo "... Multiplefork"
+	@echo "... ParentAndChild_2"
 	@echo "... waitUsing"
 	@echo "... rebuild_cache"
 	@echo "... getPidUsing"
@@ -489,6 +612,15 @@ help:
 	@echo "... Multiplefork.o"
 	@echo "... Multiplefork.i"
 	@echo "... Multiplefork.s"
+	@echo "... Tutorial_1_Sample_Code/ParentAndChild_2.o"
+	@echo "... Tutorial_1_Sample_Code/ParentAndChild_2.i"
+	@echo "... Tutorial_1_Sample_Code/ParentAndChild_2.s"
+	@echo "... Tutorial_1_Sample_Code/ProcessTermination_1.o"
+	@echo "... Tutorial_1_Sample_Code/ProcessTermination_1.i"
+	@echo "... Tutorial_1_Sample_Code/ProcessTermination_1.s"
+	@echo "... Tutorial_1_Sample_Code/Signal.o"
+	@echo "... Tutorial_1_Sample_Code/Signal.i"
+	@echo "... Tutorial_1_Sample_Code/Signal.s"
 	@echo "... Tutorial_1_Sample_Code/execve.o"
 	@echo "... Tutorial_1_Sample_Code/execve.i"
 	@echo "... Tutorial_1_Sample_Code/execve.s"

@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/d/operatSystem/Tutorial_1_Sample_Code/Signal.c
+stdio.h
+-
+signal.h
+-
+stdlib.h
+-
+unistd.h
+-
+string.h
+-
+sys/wait.h
+-
+

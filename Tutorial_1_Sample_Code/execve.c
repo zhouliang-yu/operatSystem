@@ -4,7 +4,11 @@
 #include <string.h>
 #include <wait.h>
 
-
+/**
+ * exec is a functionality of an OS that runs an executable
+ * file in the context of an already existing process, replacing the previous executable
+ * this also refer to as an overlay
+ */
 int main (int argc, char *argv[]) {
     
     int state;

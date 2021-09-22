@@ -17,6 +17,44 @@
 					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="ProcessTermination_1">
+				<Option output="/mnt/d/operatSystem/cmake-build-debug/ProcessTermination_1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 ProcessTermination_1"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ProcessTermination_1/fast">
+				<Option output="/mnt/d/operatSystem/cmake-build-debug/ProcessTermination_1" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 ProcessTermination_1/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="pipeUsing">
 				<Option output="/mnt/d/operatSystem/cmake-build-debug/pipeUsing" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
@@ -65,6 +103,44 @@
 					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="Signal">
+				<Option output="/mnt/d/operatSystem/cmake-build-debug/Signal" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 Signal"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Signal/fast">
+				<Option output="/mnt/d/operatSystem/cmake-build-debug/Signal" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 Signal/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="Multiplefork">
 				<Option output="/mnt/d/operatSystem/cmake-build-debug/Multiplefork" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
@@ -98,6 +174,44 @@
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 Multiplefork/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ParentAndChild_2">
+				<Option output="/mnt/d/operatSystem/cmake-build-debug/ParentAndChild_2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 ParentAndChild_2"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ParentAndChild_2/fast">
+				<Option output="/mnt/d/operatSystem/cmake-build-debug/ParentAndChild_2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/d/operatSystem/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 ParentAndChild_2/fast"/>
 					<CompileFile command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j12 -f &quot;/mnt/d/operatSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -306,6 +420,15 @@
 		</Build>
 		<Unit filename="/mnt/d/operatSystem/Multiplefork.c">
 			<Option target="Multiplefork"/>
+		</Unit>
+		<Unit filename="/mnt/d/operatSystem/Tutorial_1_Sample_Code/ParentAndChild_2.c">
+			<Option target="ParentAndChild_2"/>
+		</Unit>
+		<Unit filename="/mnt/d/operatSystem/Tutorial_1_Sample_Code/ProcessTermination_1.c">
+			<Option target="ProcessTermination_1"/>
+		</Unit>
+		<Unit filename="/mnt/d/operatSystem/Tutorial_1_Sample_Code/Signal.c">
+			<Option target="Signal"/>
 		</Unit>
 		<Unit filename="/mnt/d/operatSystem/Tutorial_1_Sample_Code/execve.c">
 			<Option target="execve"/>

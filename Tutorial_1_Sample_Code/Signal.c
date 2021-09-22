@@ -17,6 +17,13 @@
  *           int WEXITSTATUS(int status) return the exit status (0..255)
  *           int WTERMSIG(int status) return the terminating signal
  *           int WSTOPSIG(int status) return the signal that  stopped the child
+ *
+ *  4. Signals:
+ *          SIGQUIT 3
+ *          SIGKILL 9
+ *          SIGTERM 15
+ *          SIGSTOP 19
+ *          SIGCHILD 0 CHECK IF CHILD PROCESS QUITS NORMALLY
  */
 
 int main(int argc, char *argv[]){
@@ -37,7 +44,8 @@ int main(int argc, char *argv[]){
         if(pid==0){
             printf("I'm the Child Process:\n");
             printf("I'm raising SIGCHLD signal!\n\n");
-            raise(SIGKILL);
+//            raise(SIGKILL);
+            raise(SIGCHLD);
         }
     
         //Parent process
