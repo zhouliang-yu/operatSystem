@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
         if(pid==0){
             strcpy(buf, "Test strings are updated by child.");
             printf("I'm the Child Process: %s\n", buf);
-            exit(0);
+            exit(0); // 0 reapreants exit without fault
         }
         
         //Parent process

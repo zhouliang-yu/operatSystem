@@ -29,7 +29,8 @@ int main(int argc, char *argv[]){
         
         //Parent process
         else{
-            waitpid(pid, &status, 0);
+            waitpid(pid, &status, 0); // parent process will suspend until status information of child is available
+
             printf("I'm the Parent Process:\n");
             printf("\t My pid is:%d\n", getpid());
             printf( "\t Child process exited with status %d \n", status );

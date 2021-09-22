@@ -5,6 +5,20 @@
 #include <string.h>
 #include <sys/wait.h>
 
+/** Process signals
+ *  1. send a signal to caller
+ *          int raise(int sig)
+ *  2. evaluate child process's status (zero or non-zero)
+ *           int WIFEXITED (int status) return true if the program exited under control
+ *           int WIFSIGNALED (int status)return true if the program exited because of signal
+ *           int WIFSTOPPED (int status) if the child stopped by a signal
+ *
+ *  3. evaluate child process's returned value of status argument(exact values)
+ *           int WEXITSTATUS(int status) return the exit status (0..255)
+ *           int WTERMSIG(int status) return the terminating signal
+ *           int WSTOPSIG(int status) return the signal that  stopped the child
+ */
+
 int main(int argc, char *argv[]){
 
     pid_t pid;
