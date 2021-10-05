@@ -14,7 +14,6 @@ int main(int argc, char *argv[]) {
     printf("process start to fork\n");
     pid = fork();
 
-    printf("I'm the Parent process, my pid = %d \n", getpid());
     /* execute test program */
     if (pid == -1) {
         perror("fork error");
@@ -41,6 +40,8 @@ int main(int argc, char *argv[]) {
             exit(EXIT_FAILURE);
 
         } else {
+            printf("I'm the Parent process, my pid = %d \n", getpid());
+
             /* wait for child process terminates */
             waitpid(pid, &status, WUNTRACED);
             printf("Parent process receiving the SIGCHILD signal");
@@ -52,8 +53,9 @@ int main(int argc, char *argv[]) {
                 printf("CHILD EXECUTION FAILED %d\n", WTERMSIG(status));
             }
             else if(WIFSTOPPED(status)) {
-                printf("CHILD PROCESS STOPPED %d\n", WSTOPSIG(status))
-            }else{
+                printf("CHILD PROCESS STOPPED %d\n", WSTOPSIG(status));
+            }
+            else{
                 printf("CHILD PROCESS CONTINUED\n");
             }
             exit(0);
@@ -63,4 +65,3 @@ int main(int argc, char *argv[]) {
 
     /* check child process'  termination status */
 }
-
