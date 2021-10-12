@@ -1,1 +1,0 @@
-/usr/bin/cc -g  -rdynamic CMakeFiles/ParentAndChild_2.dir/Tutorial_1_Sample_Code/ParentAndChild_2.c.o  -o ParentAndChild_2 

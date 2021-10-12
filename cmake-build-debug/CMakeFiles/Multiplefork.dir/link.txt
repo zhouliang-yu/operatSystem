@@ -1,1 +1,0 @@
-/usr/bin/cc -g  -rdynamic CMakeFiles/Multiplefork.dir/Multiplefork.c.o  -o Multiplefork 

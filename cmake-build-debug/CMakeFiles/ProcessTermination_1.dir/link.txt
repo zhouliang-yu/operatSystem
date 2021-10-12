@@ -1,1 +1,0 @@
-/usr/bin/cc -g  -rdynamic CMakeFiles/ProcessTermination_1.dir/Tutorial_1_Sample_Code/ProcessTermination_1.c.o  -o ProcessTermination_1 
