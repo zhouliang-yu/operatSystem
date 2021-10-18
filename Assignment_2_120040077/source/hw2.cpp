@@ -10,14 +10,15 @@
 
 #define ROW 10
 #define COLUMN 50 
-
+#define THREADNUM 10
 bool isWin = 0;
 bool isLose = 0;
 bool isExit = 0;
 
 pthread_mutex_t mutex;
-
-
+pthread_cond_t cond;
+int logs_speed[ROW - 1];
+int logs_size[ROW + 1];
 
 struct Node{
 	int x , y;
@@ -57,42 +58,49 @@ int kbhit(void){
 	return 0;
 }
 
-void *frog_move(void *t ) {
 
-}
 
 void *logs_move( void *t ){
+	/* initilize the setting of logs*/
+	int *log_id = (int*) t;
 
-	int logs_size[ROW + 1];
+	logs_speed[*log_id] = rand()%20 + 10;
+	logs_size[*log_id] = rand() % 3 + 13;
 
-	srand((unsigned)time(NULL));
-	for (int i = 0; i <= ROW; i ++) {
-		logs_size[i] = rand() % 3 + 13; //the size of logs from 13 to 15
-	}
-	/*  Move the logs  */
 	while (!isExit) {
 		pthread_mutex_lock(&mutex);
+
+		if (*log_id % 2){
+			/* odd row move from left to right*/
+
+		}else {
+
+		}
+	}
+
+
 	/*  Check keyboard hits, to change frog's position or quit the game. */
+	if (kbhit()) {
 
-
-	/* initilize the setting of logs*/
+	}
 
 	/*  Check game's status  */
 
 
 	/*  Print the map on the screen  */
 
-	}
+	// }
 }
 
 int main( int argc, char *argv[] ){
 
-	pthread_t frog_thread, logs_thread;
-	int rc, rl;
+	pthread_t threads[THREADNUM];
 	pthread_mutex_init(&mutex, NULL);
+	pthread_cond_init(&cond, NULL);
 
 	// Initialize the river map and frog's starting position
 	memset( map , 0, sizeof( map ) ) ;
+	printf("\e[?25l");
 	int i , j ;
 	for( i = 1; i < ROW; ++i ){
 		for( j = 0; j < COLUMN - 1; ++j )
@@ -114,16 +122,19 @@ int main( int argc, char *argv[] ){
 
 
 	/*  Create pthreads for wood move and frog control.  */
-	pthread_t frog_thread, logs_thread;
-	int rc, rl;
-	rc = pthread_create(&frog_thread, NULL, frog_move, NULL);
-	rl = pthread_create(&logs_thread, NULL, logs_move, NULL);
-	if (rc || rl) {
-		printf("ERROR: return code from pthread_create() is rc: %d and rl: %d", rc, rl);
-		exit(1);
+	for (int i = 1; i < THREADNUM; ++ i) {
+		pthread_create(&threads[i], NULL, logs_move, (void*) i);
+		usleep(200);
 	}
 
-	pthread_join(logs_thread, NULL);
+	for (int i = 1; i < THREADNUM; ++i) {
+		pthread_join(threads[i], NULL);
+	}
+	printf("\033[0;0H\033[2J\033[?25h");
+	usleep(1000) ;
+
+
+
 
 	/*  Display the output for user: win, lose or quit.  */
 	if (isExit){
@@ -137,10 +148,9 @@ int main( int argc, char *argv[] ){
 		puts("You lose the game \n");
 	}
 
-	pthread_join(frog_thread, NULL);
 
 	pthread_mutex_destroy(&mutex);
-
+	pthread_cond_destroy(&cond);
 	pthread_exit(NULL);
 
 	return 0;
