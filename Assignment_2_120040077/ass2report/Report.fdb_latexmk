@@ -1,8 +1,10 @@
 # Fdb version 3
-["pdflatex"] 1634300679 "d:/operatSystem/ass2report/Report.tex" "Report.pdf" "Report" 1634300680
-  "Report.aux" 1634300680 249 570e78352da2bc99f68e72a4b14ed91a "pdflatex"
-  "Report.tex" 1634300678 921 177ce2380925ab5bd26de818ce57b8ab ""
-  "d:/operatSystem/ass2report/Report.tex" 1634300678 921 177ce2380925ab5bd26de818ce57b8ab ""
+["pdflatex"] 1635083501 "d:/operatSystem/ass2report/Report.tex" "Report.pdf" "Report" 1635083502
+  "GCC.png" 1635063866 24393 e285d34ec71ec6994b0a9c618165b425 ""
+  "Linux.png" 1635063375 7190 8be0800f73047ded9229d521552afebb ""
+  "Report.aux" 1635083502 2730 124a3dbcc890c58c8fb32e1c8193c96b "pdflatex"
+  "Report.tex" 1635083499 6525 76aaf41ede72660852d9332e8d58efca ""
+  "d:/operatSystem/ass2report/Report.tex" 1635083499 6525 76aaf41ede72660852d9332e8d58efca ""
   "d:/tex/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1627029291 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "d:/tex/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1627027669 1004 54797486969f23fa377b128694d548df ""
   "d:/tex/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1627027669 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -48,6 +50,17 @@
   "d:/tex/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1627032862 5227242 bd90361a11e4a4bf88f70a677fa2a119 ""
   "d:/tex/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1627032943 2801599 b79f867d97d78478c632517a6e4ce8ad ""
   "d:/tex/texlive/2021/texmf.cnf" 1627032842 713 e69b156964470283e0530f5060668171 ""
+  "inter.png" 1635081226 16564 3ab99f09f22da5a75057f9163da8ed36 ""
+  "kb.png" 1635070081 63524 288b1f8d4d8a01eca32e2f7ba9b76e6f ""
+  "logmove.png" 1635064742 46064 68df238a3c3737bdd46b9047021d02e5 ""
+  "logset.png" 1635066295 37438 a940c451f99a7a822a68dea293b35b27 ""
+  "lose.png" 1635081448 13498 46a9ffefcd3f6b552f3c28be07c037b2 ""
+  "print.png" 1635070691 43042 0ef97d14c6c3e9156000c74dc43aaaf5 ""
+  "quick.png" 1635082242 15550 6767f9c49371a771bc443cc3c5430f68 ""
+  "quit.png" 1635081604 13538 1f7b454eb5ded42a3d77e792b4b0bc8d ""
+  "speed.png" 1635080121 29156 56e8330de35a0d4f6deb86aeb195ca58 ""
+  "status.png" 1635070494 33397 72d56c52b1a2b36498216c45e003d860 ""
+  "win.png" 1635081491 13682 48046d68886a424972645d6655721010 ""
   (generated)
   "Report.log"
   "Report.aux"
