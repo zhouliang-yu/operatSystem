@@ -96,8 +96,20 @@ __device__ uchar vm_read(VirtualMemory *vm, u32 addr)
   change_frame_table_valid_to_invalid(vm, frame_num);
 }
 
+__device__ void check_frame_full(VirtualMemory *vm, u32 page_num, u32 frame_num){
+  if (vm->invert_page_table[frame_num] != 0x80000000)
+  {
+    move_to_storage(vm, frame_num);
+  }
+}
 
 
+__device__ void move_to_storage(VirtualMemory *vm, u32 frame_num){
+  u32 page_num = vm -> invert_page_table[frame_num];
+  for (int i = 0; i < 32; i ++) {
+    vm->storage[page_num * 32 + i] = vm->buffer[frame_num * 32 + i];
+  }
+}
 
 
 
@@ -118,10 +130,31 @@ __device__ void vm_write(VirtualMemory *vm, u32 addr, uchar value) {
   change_frame_table_valid_to_invalid(vm, frame_num);
 }
 
+__device__ void move_to_result_buffer(VirtualMemory *vm, uchar* result, u32 page_num){
+  u32 frame_num = find_frame_number(vm, page_num);
+  for (int i = 0; i < 32; i++){
+    result[page_num * 32 + i] = vm -> buffer[frame_num * 32 + i]; // load element from vm buffer to result buffer in global memory
+  }
+}
+
+
 __device__ void vm_snapshot(VirtualMemory *vm, uchar *results, int offset,
                             int input_size) {
   /* Complete snapshot function togther with vm_read to load elements from data
    * to result buffer */
+  for (int i = 0; i < input_size; i++){
+    u32 page_num = i /32;
+    u32 frame_offset = i % 32;
+    u32 frame_num;
+    if (!check_page_fault(vm, page_num)) {
+      frame_num = vm -> invert_page_table[vm -> PAGE_ENTRIES];
+      move_to_memory(vm, frame_num, page_num);
+    }else{
+      frame_num = find_frame_number(vm, page_num);
+    }
+    move_to_result_buffer(vm, results, page_num);
+    change_frame_table_valid_to_invalid(vm, frame_num);
+  }
 }
 
 
