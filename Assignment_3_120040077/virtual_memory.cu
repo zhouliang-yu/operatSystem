@@ -33,35 +33,46 @@ __device__ void vm_init(VirtualMemory *vm, uchar *buffer, uchar *storage,
 }
 
 __device__ bool check_page_fault(VirtualMemory *vm, u32 page_num) {
-  for (int i = 0; i < vm -> PAGE_ENTRIES; i ++) {
-    if (vm -> invert_page_table[i] == page_num) {
+  // for (int i = 0; i < vm -> PAGE_ENTRIES; i ++) {
+  //   if (vm -> invert_page_table[i] == page_num) {
+  //     return true;
+  //   }
+  // }
+  // *vm->pagefault_num_ptr = *vm->pagefault_num_ptr + 1;
+  // return false;
+  for (int i = 0; i < vm->PAGE_ENTRIES; i++)
+  {
+    if (vm->invert_page_table[i] == page_num)
+    {
+      // return false;
       return true;
     }
   }
   *vm->pagefault_num_ptr = *vm->pagefault_num_ptr + 1;
+  // return true;
   return false;
 }
 
 
 
-__device__ int find_frame_number(VirtualMemory *vm, u32 page_num) {
-  for (int i = 0; i < vm->PAGE_ENTRIES; i++) {
-    if (vm -> invert_page_table[i] == page_num) {
-      return i;
-    }
-  }
-  return -1;
-}
+// __device__ int find_frame_number(VirtualMemory *vm, u32 page_num) {
+//   for (int i = 0; i < vm->PAGE_ENTRIES; i++) {
+//     if (vm -> invert_page_table[i] == page_num) {
+//       return i;
+//     }
+//   }
+//   return -1;
+// }
 
-__device__ int find_frame_num_in_frame_table(VirtualMemory *vm, u32 frame_num)
-{
-  for (int i = 0; i < vm -> PAGE_ENTRIES; i++){
-    if (vm -> invert_page_table[i + vm ->PAGE_ENTRIES] == frame_num){
-      return i;
-    }
-  }
-  return -1;
-}
+// __device__ int find_frame_num_in_frame_table(VirtualMemory *vm, u32 frame_num)
+// {
+//   for (int i = 0; i < vm -> PAGE_ENTRIES; i++){
+//     if (vm -> invert_page_table[i + vm ->PAGE_ENTRIES] == frame_num){
+//       return i;
+//     }
+//   }
+//   return -1;
+// }
 
 
 
@@ -105,11 +116,18 @@ __device__ uchar vm_read(VirtualMemory *vm, u32 addr)
     frame_num = -1; //out of index or not found
   }
   
-int tempt = vm->invert_page_table[vm->PAGE_ENTRIES + find_frame_num_in_frame_table(vm, frame_num)];
-  for (int i = find_frame_num_in_frame_table(vm, frame_num); i < vm -> PAGE_ENTRIES - 1; i ++) {
+// int tempt = vm->invert_page_table[vm->PAGE_ENTRIES + find_frame_num_in_frame_table(vm, frame_num)];
+//   for (int i = find_frame_num_in_frame_table(vm, frame_num); i < vm -> PAGE_ENTRIES - 1; i ++) {
+//     vm->invert_page_table[i + vm->PAGE_ENTRIES] = vm->invert_page_table[i + vm->PAGE_ENTRIES + 1];
+//   }
+//   vm -> invert_page_table[2 * vm->PAGE_ENTRIES - 1] = tempt;
+  /** change valid to invalid*/
+  int tempt = vm->invert_page_table[vm->PAGE_ENTRIES + frame_id];
+  for (int i = frame_id; i < vm->PAGE_ENTRIES - 1; i++)
+  {
     vm->invert_page_table[i + vm->PAGE_ENTRIES] = vm->invert_page_table[i + vm->PAGE_ENTRIES + 1];
   }
-  vm -> invert_page_table[2 * vm->PAGE_ENTRIES - 1] = tempt;
+  vm->invert_page_table[2 * vm->PAGE_ENTRIES - 1] = tempt;
 }
 
 // /** swap the page from buffer to the storage*/
@@ -128,7 +146,9 @@ __device__ void vm_write(VirtualMemory *vm, u32 addr, uchar value) {
   u32 page_offset = addr % 32;
   u32 frame_num;
 
-  if(!check_page_fault(vm, page_num)) {
+  // if(!check_page_fault(vm, page_num)) {
+  if (check_page_fault(vm, page_num))
+  {
     /** put the frame number as the top one*/
   frame_num = vm->invert_page_table[vm->PAGE_ENTRIES];
     
@@ -152,12 +172,34 @@ __device__ void vm_write(VirtualMemory *vm, u32 addr, uchar value) {
   }
   vm->buffer[frame_num * 32 + page_offset] = value;
 
-/** change from invalid to valid*/
-  int tempt = vm->invert_page_table[vm->PAGE_ENTRIES + find_frame_num_in_frame_table(vm, frame_num)];
-  for (int i = find_frame_num_in_frame_table(vm, frame_num); i < vm -> PAGE_ENTRIES - 1; i ++) {
+/** change from invalid to valid bit*/
+
+/** serch the index of corresponding in frame table*/
+  int frame_id;
+  for (int i = 0; i < vm->PAGE_ENTRIES; i++)
+  {
+    if (vm->invert_page_table[i + vm->PAGE_ENTRIES] == frame_num)
+    {
+      frame_id = i;
+    }
+  }
+  frame_id = -1;
+
+  // int tempt = vm->invert_page_table[vm->PAGE_ENTRIES + find_frame_num_in_frame_table(vm, frame_num)];
+  // for (int i = find_frame_num_in_frame_table(vm, frame_num); i < vm -> PAGE_ENTRIES - 1; i ++) {
+  //   vm->invert_page_table[i + vm->PAGE_ENTRIES] = vm->invert_page_table[i + vm->PAGE_ENTRIES + 1];
+  // }
+  // vm -> invert_page_table[2 * vm->PAGE_ENTRIES - 1] = tempt;
+
+
+ /** change valid to invalid*/
+  int tempt = vm->invert_page_table[vm->PAGE_ENTRIES + frame_id];
+  for (int i = frame_id; i < vm->PAGE_ENTRIES - 1; i++)
+  {
     vm->invert_page_table[i + vm->PAGE_ENTRIES] = vm->invert_page_table[i + vm->PAGE_ENTRIES + 1];
   }
-  vm -> invert_page_table[2 * vm->PAGE_ENTRIES - 1] = tempt;
+  vm->invert_page_table[2 * vm->PAGE_ENTRIES - 1] = tempt;
+  
 }
 
 
@@ -169,7 +211,10 @@ __device__ void vm_snapshot(VirtualMemory *vm, uchar *results, int offset,
     u32 page_num = i /32;
     u32 frame_offset = i % 32;
     u32 frame_num;
-    if (!check_page_fault(vm, page_num)) {
+
+    // if (!check_page_fault(vm, page_num)) {
+    if (check_page_fault(vm, page_num))
+    {
       frame_num = vm -> invert_page_table[vm -> PAGE_ENTRIES];
       u32 original_page_num = vm->invert_page_table[frame_num];
     for (int i = 0; i < 32; i ++) {
@@ -177,7 +222,9 @@ __device__ void vm_snapshot(VirtualMemory *vm, uchar *results, int offset,
     vm->buffer[frame_num * 32 + i] = vm -> storage[page_num * 32 + i];
   }
   vm -> invert_page_table[frame_num] = page_num;
-    }else{
+    }
+    else
+    {
       // frame_num = find_frame_number(vm, page_num);
       /** find if there exists frame number*/
       for (int i = 0; i < vm->PAGE_ENTRIES; i++)
@@ -189,18 +236,37 @@ __device__ void vm_snapshot(VirtualMemory *vm, uchar *results, int offset,
       }
       frame_num = -1; //out of index or not found
     }
- 
+
 /** move to the results buffer*/
  for (int i = 0; i < 32; i++){
     results[page_num * 32 + i] = vm -> buffer[frame_num * 32 + i]; // load element from vm buffer to result buffer in global memory
-  }    
+  }
 
-/** change from invalid to valid*/
-    int tempt = vm->invert_page_table[vm->PAGE_ENTRIES + find_frame_num_in_frame_table(vm, frame_num)];
-  for (int i = find_frame_num_in_frame_table(vm, frame_num); i < vm -> PAGE_ENTRIES - 1; i ++) {
+  /** serch the index of corresponding in frame table*/
+  int frame_id;
+  for (int i = 0; i < vm->PAGE_ENTRIES; i++)
+  {
+    if (vm->invert_page_table[i + vm->PAGE_ENTRIES] == frame_num)
+    {
+      frame_id = i;
+    }
+  }
+  frame_id = -1;
+
+  /** change from invalid to valid*/
+  // int tempt = vm->invert_page_table[vm->PAGE_ENTRIES + frame_id];
+  // for (int i = find_frame_num_in_frame_table(vm, frame_num); i < vm -> PAGE_ENTRIES - 1; i ++) {
+  //   vm->invert_page_table[i + vm->PAGE_ENTRIES] = vm->invert_page_table[i + vm->PAGE_ENTRIES + 1];
+  // }
+  // vm -> invert_page_table[2 * vm->PAGE_ENTRIES - 1] = tempt;
+
+
+  int tempt = vm->invert_page_table[vm->PAGE_ENTRIES + frame_id];
+  for (int i = frame_id; i < vm->PAGE_ENTRIES - 1; i++)
+  {
     vm->invert_page_table[i + vm->PAGE_ENTRIES] = vm->invert_page_table[i + vm->PAGE_ENTRIES + 1];
   }
-  vm -> invert_page_table[2 * vm->PAGE_ENTRIES - 1] = tempt;
+  vm->invert_page_table[2 * vm->PAGE_ENTRIES - 1] = tempt;
   }
 }
 
