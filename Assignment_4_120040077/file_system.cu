@@ -42,8 +42,7 @@ struct My_FCB
 {
   char file_name[20];
   u32 location;
-  int file_size;
-  int mode;
+  u32 size;
   int create_time;
   int modified_time;
 }Current_FCB;
@@ -53,20 +52,24 @@ __device__ u32 search_FCB(FileSystem *fs, char *s)
 {
   int flag_find = 1;//1 indicates that we find the s, 0 means we can't find
   for (int i = fs->SUPERBLOCK_SIZE; i < fs->FILE_BASE_ADDRESS - 1; i += 32) {
-    if (fs->volume[i] == 0 && fs->volume[i + 1] == 0 && fs->volume[i + 2] == 0 && fs->volume[i+3] == 0)
+    if (fs->volume[i] == 0 ) // nothing has been stored
     { // cannot find
       flag_find = 0
       break;
     }
     else
     {
-      for (int j = 0; j < 20; j++) { // 0-20 stores the file name
-        if(fs->volume[i+j] != s[j]){
-          flag_find = 0;
-          break;
-        }
-      }
-    }
+		int j = 0
+		while (s[j] != '\0')
+		{
+			if (fs->volume[i * fs->FCB_SIZE + fs->SUPERBLOCK_SIZE + j] != file_name[j++])
+			{
+
+				flag_find = false;
+				break;
+			}
+		}
+	}
 
     if (flag_find == 1) {
       return i;
@@ -140,7 +143,7 @@ __device__ void file_info_store(FileSystem *fs, char *s){
 		  u32 size = (fs->volume[current_FCB_position+24] << 24) + (fs->volume[current_FCB_position + 25] << 16) + (fs->volume[current_FCB_position + 26] << 8) + (fs->volume[current_FCB_position + 27]);
 		  for (int i = 0; i < size; i++)
 		  {
-			  fs->volume[start_location * 32 + i + fs->FILE_BASE_ADDRESS] = 0; // fill with 0
+			  fs->volume[start_location * 32 + i + fs->FILE_BASE_ADDRESS] = 0;
 		  }
 
 		  //clear the old file in the superblock
@@ -164,9 +167,22 @@ __device__ void file_info_store(FileSystem *fs, char *s){
 }
 
 
+
+
+
+
+
 __device__ void fs_read(FileSystem *fs, uchar *output, u32 size, u32 fp)
 {
 	/* Implement read operation here */
+	if(fp == -1){
+		print("error\n");
+	}
+	
+	for (int i = 0; i < size; i++)
+	{
+		output[i] = fs->volume[fp * 32 + i + fs->FILE_BASE_ADDRESS];
+	}
 }
 
 __device__ u32 fs_write(FileSystem *fs, uchar* input, u32 size, u32 fp)
@@ -176,7 +192,7 @@ __device__ u32 fs_write(FileSystem *fs, uchar* input, u32 size, u32 fp)
 
 
 
-	
+
 }
 __device__ void fs_gsys(FileSystem *fs, int op)
 {
