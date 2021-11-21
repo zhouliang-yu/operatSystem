@@ -330,12 +330,176 @@ __device__ u32 fs_write(FileSystem *fs, uchar* input, u32 size, u32 fp)
 
 
 }
+
+__device__ u32 endpoint(FileSystem *fs){
+	u32 end_point
+	for (U32 i = 4096; I < 36863 + 32; i += 32){
+		u32 size = u32 size = ((int)fs->volume[i + 24]) +
+							  ((int)fs->volume[i + 25]) * (1 << 8) +
+							  ((int)fs->volume[i + 26]) * (1 << 16);
+		
+		if (size == 0) {
+			size = (fs->volume[4096] << 24) + (fs->volume[4096 + 1] << 16) + (fs->volume[4096 + 2] << 8);
+			end_point = i - 32;
+			break;
+		}
+	}
+	end_point = i - 32;
+	return end_point;
+}
+
+__device__ void bubblesort(FileSystem *fs, u32 begin, u32 end, int op) {
+	
+	if (op == 1) { //by size
+		for (int i = begin; i < end; i = i + 32){
+			for (int j = begin; j < end + begin - i ; j = j+ 32){
+				u32 j_size_pre = (fs->volume[j+24] << 16) + (fs->volume[j + 25] << 8 )  + (fs->volume[j + 26]);
+				u32 j_size_after = (fs->volume[j + 24 + 32] << 16) + (fs->volume[j + 25 + 32] << 8) + (fs->volume[j + 26 + 32]);
+				u32 j_time_pre = (fs->volume[j + 30] << 8) + (fs->volume[j + 31]);
+				u32 j_time_after = (fs->volume[j + 30 + 32] << 8) + (fs->volume[j + 31 + 32]);
+				if (j_size_pre < j_size_after){
+					// swap
+					for (int k = 0; i < 32; i++)
+					{
+						uchar tempt = fs->volume[j + k];
+						fs->volume[j + k] = fs->volume[j + k + 32];
+						fs->volume[j + k + 32] = tempt;
+					}
+				}
+				if (j_size_after == j_size_pre && j_time_pre > j_time_after){
+					// swap
+					for (int k = 0; i < 32; i++)
+					{
+						uchar tempt = fs->volume[j + k];
+						fs->volume[j + k] = fs->volume[j + k + 32];
+						fs->volume[j + k + 32] = tempt;
+					}
+				}
+			}
+		}
+	}else{ // by time
+		for (int i = begin; i < end; i = i + 32)
+		{
+			for (int j = begin; j < end + begin - i; j = j + 32)
+			{
+				u32 j_time_prev = (fs->volume[j + 28] << 8) + (fs->volume[j + 29]);
+				u32 j_time_after = (fs->volume[j + 28 + 32] << 8) + (fs->volume[j + 29 + 32]);
+				if (j_time_prev < j_time_after){
+					// swap
+					for (int k = 0; i < 32; i++)
+					{
+						uchar tempt = fs->volume[j + k];
+						fs->volume[j + k] = fs->volume[j + k + 32];
+						fs->volume[j + k + 32] = tempt;
+					}
+				}
+			}
+		}
+	}
+
+}
+
+__device__ void display(FileSystem*fs, u32 end_point, int op){
+	char file_name[20];
+	if (op != 0) { // sort by file size
+		for (u32 i = 4096; i <= end_point; i = i + 32)
+		{
+			for (int j = 0; j < 20; j++)
+			{
+				name[j] = fs->volume[i + j];
+			}
+			u32 size = (fs->volume[j + 24] << 16) + (fs->volume[j + 25] << 8) + (fs->volume[j + 26]);
+			printf("%s %d\n", file_name, size);
+		}
+	}
+	else{ //sort by time
+		for (u32 i = 4096; i <= end_point; i = i + 32)
+		{
+			for (int j = 0; j < 20; j++)
+			{
+				name[j] = fs->volume[i + j];
+			}
+			printf("%s\n", name);
+		}
+	}
+
+
+
+}
+
+
+
+
 __device__ void fs_gsys(FileSystem *fs, int op)
 {
 	/* Implement LS_D and LS_S operation here */
+	/** sort by date*/
+	u32 end_point = end_point(fs);
+
+	if (end_point < 4096)
+	{
+		print("error: no file in FCB");
+		return;
+	}
+	
+	if(op != 0) { //sort by size
+		print("---sort by file size---\n");
+		bubblesort(fs, 4096, end_point, 1);
+		display(fs, end_point, 1);
+	}else{
+		print("---sort by time---\n")
+		bubblesort(fs, 4096, end_point, 0);
+		display(fs, end_point, 0);
+	}
+
 }
 
 __device__ void fs_gsys(FileSystem *fs, int op, char *s)
 {
 	/* Implement rm operation here */
+	u32 file_exist = search_FCB(fs, s);
+	if (file_exist == -1)
+		printf("error : the file is not exist\n");
+	else
+	{
+		current_FCB_position = file_exist;
+		//find where the file start from FCB
+		u32 FCB_start_block = (fs->volume[current_FCB_position + 20] << 24) + (fs->volume[current_FCB_position + 21] << 16) + (fs->volume[current_FCB_position + 22] << 8) + (fs->volume[current_FCB_position + 23]);
+
+		//find the size of file
+		u32 size = ((int)fs->volume[current_FCB_position + 24]) +
+				   ((int)fs->volume[current_FCB_position + 25]) * (1 << 8) +
+				   ((int)fs->volume[current_FCB_position + 26]) * (1 << 16);
+		
+		//clear content in storage
+		for (int i = 0; i < size; i++)
+		{
+			fs->volume[FCB_start_block * 32 + i + fs->FILE_BASE_ADDRESS] = 0;
+		}
+
+		//clean corresponding superblock
+		for (int i = 0; i < (size - 1) / 32 + 1; i++)
+		{
+			fs->volume[FCB_start_block + i] = 0;
+		}
+
+		//clean the FCB
+		for (int i = 0; i < 32; i++)
+		{
+			fs->volume[current_FCB_position + i] = 0;
+		}
+
+		segment_management(fs, FCB_start_block, size);
+		
+		for (int i = current_FCB_position;i < 36863; i = i + 32){
+			if (fs->volume[i + 32 + 24] == 0 && fs->volume[i + 32+25] == 0 && fs->volume[i +32+ 26] == 0){
+				for (int j = 0; j < 32; j ++){
+					fs->volume[i + j + 32] = 0;
+				}
+			}
+		}
+
+
+		FCB_position = FCB_position - 32;
+	}
 }
