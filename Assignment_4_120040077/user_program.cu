@@ -4,7 +4,7 @@
 
 __device__ void user_program(FileSystem *fs, uchar *input, uchar *output) {
 	
-	
+	/*
 	/////////////// Test Case 1  ///////////////
 	u32 fp = fs_open(fs, "t.txt\0", G_WRITE);
 	fs_write(fs, input, 64, fp);
@@ -22,9 +22,9 @@ __device__ void user_program(FileSystem *fs, uchar *input, uchar *output) {
 	fs_gsys(fs, LS_D);
 	fs_gsys(fs, RM, "t.txt\0");
 	fs_gsys(fs, LS_S);
-
-
-	/*
+	*/
+	
+	
 	/////////////// Test Case 2  ///////////////
 	u32 fp = fs_open(fs, "t.txt\0", G_WRITE);
 	fs_write(fs,input, 64, fp);
@@ -64,7 +64,7 @@ __device__ void user_program(FileSystem *fs, uchar *input, uchar *output) {
 
 	fs_gsys(fs,LS_D);
 	
-
+	/*
 	/////////////// Test Case 3  ///////////////
 	u32 fp = fs_open(fs, "t.txt\0", G_WRITE);
 	fs_write(fs, input, 64, fp);
