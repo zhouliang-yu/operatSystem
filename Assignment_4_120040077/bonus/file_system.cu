@@ -1,4 +1,4 @@
-#include "file_system.h"
+﻿#include "file_system.h"
 #include <cuda.h>
 #include <cuda_runtime.h>
 #include <stdio.h>
@@ -170,25 +170,6 @@ __device__ u32 file_info_store(FileSystem *fs, char *s){
 	
 }
 
-
-__device__ void fs_open_writemode(FileSystem *fs, char *s, int op, u32 start_block, u32 size){
-	for (int i = 0; i < size; i++) {
-				fs->volume[start_block * 32 + i + fs->FILE_BASE_ADDRESS] = 0;
-		}
-
-		//clean the old file in block
-		for (int i = 0; i < (size - 1) / 32 + 1; i++) {
-		
-			fs->volume[(start_block + i)/ 8] = fs->volume[(start_block + i) / 8] - (1 << ((start_block + i)%8));
-		}
-		
-		fs->volume[current_FCB_position + 30] = gtime >> 8;
-		fs->volume[current_FCB_position + 31] = gtime;
-		
-	
-}
-
-
 __device__ u32 fs_open(FileSystem *fs, char *s, int op)
 {
 	/* Implement open operation here */
@@ -211,13 +192,27 @@ __device__ u32 fs_open(FileSystem *fs, char *s, int op)
 			
 		}
 		else{
-
-			// fs_open_write(fs, s, op);
 			gtime++;
 			current_FCB_position = search_FCB(fs, s);
 			u32 start_block = (fs->volume[current_FCB_position + 20] << 24) + (fs->volume[current_FCB_position + 21] << 16) + (fs->volume[current_FCB_position + 22] << 8) + (fs->volume[current_FCB_position + 23]);
 			u32 size = (fs->volume[current_FCB_position + 24] << 24) + (fs->volume[current_FCB_position + 25] << 16) + (fs->volume[current_FCB_position + 26] << 8) + (fs->volume[current_FCB_position + 27]);
-			fs_open_writemode(fs, s, op, start_block,  size);
+			for (int i = 0; i < size; i++) {
+				fs->volume[start_block * 32 + i + fs->FILE_BASE_ADDRESS] = 0;
+			}
+
+			//clean the old file in block
+			for (int i = 0; i < (size - 1) / 32 + 1; i++) {
+				u32 super_file_start_location = start_block + i;
+				int shift_number = super_file_start_location % 8;
+				fs->volume[super_file_start_location / 8] = fs->volume[super_file_start_location / 8] - (1 << shift_number);
+			}
+
+			//uptime FCB time
+			fs->volume[current_FCB_position + 30] = gtime >> 8;
+			fs->volume[current_FCB_position + 31] = gtime;
+
+			//uptime the time
+			
 			return start_block;
 		}
 		
@@ -240,28 +235,25 @@ __device__ void fs_read(FileSystem *fs, uchar *output, u32 size, u32 fp)
 	}
 }
 
+__device__ u32 fs_write(FileSystem *fs, uchar* input, u32 size, u32 fp)
+{
+	/* Implement write operation here */
 
-__device__ void fs_write_enough(FileSystem *fs, uchar* input, u32 size, u32 fp, u32 original_size, u32 old_file_size){
-	for (int i = 0; i < size; i++) {
-			fs->volume[fp * 32 + i + fs->FILE_BASE_ADDRESS] = input[i];
+	if(size > fs->MAX_FILE_NUM) {
+		printf("incorrect error\n");
+		return -1;
+	}
 
-		
-			if (i % 32 == 0) { 
-				fs->volume[(fp + i /32) / 8] = fs->volume[(fp + i / 32) / 8] + (1 << ((fp + i / 32) % 8));
-			}
-		}
-		if (int (original_size) < 0) file_start_location = file_start_location + (-original_size - 1) / 32 + 1;
+	fp &= 0x0fffffff;
+	if (fp == -1){
+		printf(" error\n");
+	}
 
-		
-		fs->volume[current_FCB_position + 24] = size >> 24;
-		fs->volume[current_FCB_position + 25] = size >> 16;
-		fs->volume[current_FCB_position + 26] = size >> 8;
-		fs->volume[current_FCB_position + 27] = size;
-		if (original_size > 0 && old_file_size != 0 && fp != file_start_location - 1) segment_management(fs, fp + (size - 1) / 32 + 1, original_size);
-}
-
-__device__ u32 fs_write_not_enough(FileSystem *fs, uchar* input, u32 size, u32 fp, u32 original_size){
-	if (file_start_location * 32 - 1 + size >= fs->SUPERBLOCK_SIZE) {
+    
+	int enough_space = (fs->volume[(fp + (size - 1) / 32)/8] >> (fp + (size - 1) / 32) % 8) % 2;
+	if (enough_space == 1) {
+		u32 original_size = (fs->volume[current_FCB_position + 24] << 24) + (fs->volume[current_FCB_position + 25] << 16) + (fs->volume[current_FCB_position + 26] << 8) + (fs->volume[current_FCB_position + 27]);
+		if (file_start_location * 32 - 1 + size >= fs->SUPERBLOCK_SIZE) {
 			return -1;
 		}
 
@@ -290,34 +282,28 @@ __device__ u32 fs_write_not_enough(FileSystem *fs, uchar* input, u32 size, u32 f
 			fs->volume[current_FCB_position + 23] = file_start_location;
 		}
 		segment_management(fs, fp, original_size);
-}
-
-__device__ u32 fs_write(FileSystem *fs, uchar* input, u32 size, u32 fp)
-{
-	/* Implement write operation here */
-
-	if(size > fs->MAX_FILE_NUM) {
-		printf("incorrect error\n");
-		return -1;
-	}
-
-	fp &= 0x0fffffff;
-	if (fp == -1){
-		printf(" error\n");
-	}
-
-    
-	int enough_space = (fs->volume[(fp + (size - 1) / 32)/8] >> (fp + (size - 1) / 32) % 8) % 2;
-	if (enough_space == 1) {
-		u32 original_size = (fs->volume[current_FCB_position + 24] << 24) + (fs->volume[current_FCB_position + 25] << 16) + (fs->volume[current_FCB_position + 26] << 8) + (fs->volume[current_FCB_position + 27]);
-		fs_write_not_enough(fs,  input,  size,  fp,  original_size);
 	}	
 	if(enough_space == 0){
 		u32 old_file_size = (fs->volume[current_FCB_position + 24] << 24) + (fs->volume[current_FCB_position + 25] << 16) + (fs->volume[current_FCB_position + 26] << 8) + (fs->volume[current_FCB_position + 27]);
 		u32 original_size = old_file_size - size;
 
-		fs_write_enough(fs, input, size, fp, original_size, old_file_size);
 		
+		for (int i = 0; i < size; i++) {
+			fs->volume[fp * 32 + i + fs->FILE_BASE_ADDRESS] = input[i];
+
+		
+			if (i % 32 == 0) { 
+				fs->volume[(fp + i /32) / 8] = fs->volume[(fp + i / 32) / 8] + (1 << ((fp + i / 32) % 8));
+			}
+		}
+		if (int (original_size) < 0) file_start_location = file_start_location + (-original_size - 1) / 32 + 1;
+
+		
+		fs->volume[current_FCB_position + 24] = size >> 24;
+		fs->volume[current_FCB_position + 25] = size >> 16;
+		fs->volume[current_FCB_position + 26] = size >> 8;
+		fs->volume[current_FCB_position + 27] = size;
+		if (original_size > 0 && old_file_size != 0 && fp != file_start_location - 1) segment_management(fs, fp + (size - 1) / 32 + 1, original_size);
 	}
 
 	
@@ -420,10 +406,28 @@ __device__ u32 cuda_strlen(char* s) {
 	return result;
 }
 
+__device__ void fs_gsys(FileSystem *fs, int op, char *s)
+{
+	/* Implement rm operation here */
+	if (cuda_strlen(s) > 20)
+	{
+			printf("File Name Size Exceed The Largest Filename Limit \n");
+			return;
+	}
 
-__device__ void fs_gsys_rm(FileSystem *fs, int op, char *s, u32 start_block, u32 size){
-			
-			
+
+	if (op == RM){
+		u32 file_exist = search_FCB(fs, s);
+		if (file_exist == -1){
+			printf("error: no such file to remove\n");}
+		else {
+			current_FCB_position = search_FCB(fs, s);
+
+			// find the start block in FCB
+			u32 start_block = (fs->volume[current_FCB_position + 20] << 24) + (fs->volume[current_FCB_position + 21] << 16) + (fs->volume[current_FCB_position + 22] << 8) + (fs->volume[current_FCB_position + 23]);
+
+			//clean the old file in storage
+			u32 size = (fs->volume[current_FCB_position+24] << 24) + (fs->volume[current_FCB_position + 25] << 16) + (fs->volume[current_FCB_position + 26] << 8) + (fs->volume[current_FCB_position + 27]);
 			for (int i = 0; i < size; i++) {
 				fs->volume[start_block * 32 + i + fs->FILE_BASE_ADDRESS] = 0;
 			}
@@ -447,33 +451,6 @@ __device__ void fs_gsys_rm(FileSystem *fs, int op, char *s, u32 start_block, u32
 			}
 		}
 			FCB_position = FCB_position - 32;
-}
-
-
-__device__ void fs_gsys(FileSystem *fs, int op, char *s)
-{
-	/* Implement rm operation here */
-	if (cuda_strlen(s) > 20)
-	{
-			printf("File Name Size Exceed The Largest Filename Limit \n");
-			return;
-	}
-
-
-	if (op == RM){
-		u32 file_exist = search_FCB(fs, s);
-		if (file_exist == -1){
-			printf("error: no such file to remove\n");}
-		else {
-			current_FCB_position = search_FCB(fs, s);
-
-			// find the start block in FCB
-			u32 start_block = (fs->volume[current_FCB_position + 20] << 24) + (fs->volume[current_FCB_position + 21] << 16) + (fs->volume[current_FCB_position + 22] << 8) + (fs->volume[current_FCB_position + 23]);
-
-			//clean the old file in storage
-			u32 size = (fs->volume[current_FCB_position+24] << 24) + (fs->volume[current_FCB_position + 25] << 16) + (fs->volume[current_FCB_position + 26] << 8) + (fs->volume[current_FCB_position + 27]);
-			fs_gsys_rm(fs, op, s,start_block, size);
-		
 		}
 	}
 }
