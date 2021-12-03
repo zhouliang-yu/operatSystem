@@ -47,6 +47,7 @@ static int drv_open(struct inode*, struct file*);
 static ssize_t drv_write(struct file *filp, const char __user *buffer, size_t, loff_t*);
 static int drv_release(struct inode*, struct file*);
 static long drv_ioctl(struct file *, unsigned int , unsigned long );
+static int prime(int, short);
 
 // cdev file_operations
 static struct file_operations fops = {
@@ -173,7 +174,76 @@ static ssize_t drv_write(struct file *filp, const char __user *buffer, size_t ss
 
 static long drv_ioctl(struct file *filp, unsigned int cmd, unsigned long arg) {
 	/* Implement ioctl setting for your device */
-	
+	int IOMode = myini(DMAREADABLEADDR);
+	int ret = (int*)arg;
+	int signal; //store the result of ret to the signal
+	get_user(signal, ret);
+
+	if (cmd == HW5_IOCSETSTUID){
+		//STUID 
+		myouti(signal, DMASTUIDADDR);
+		printk("%s,%s(): My student id = <%i>\n", PREFIX_TITLE,__func__, info);
+	}
+
+
+	if(cmd == HW5_IOCSETRWOK)
+	{
+		if (signal == 0 || signal == 1){
+			//RW complete
+			printk("%s,%s()RW OK\n", PREFIX_TITLE, __func__);
+			myouti(signal, DMARWOKADDR);
+		}else{
+			printk("%s,%s(): RW Not Complete\n", PREFIX_TITLE, __func__);
+			return -1;
+		}
+	}
+
+	if (cmd == HW5_IOCSETBLOCK){
+		//complete set block or non-block
+		if(signal == 0){
+			//non-blocking IO
+			printk("%s,%s():Non-Blocking IO\n",  PREFIX_TITLE, __func__);
+			myouti(signal, HW5_IOCSETBLOCK);
+		}
+
+		if(signal == 1){
+			//blocking IO
+			printk("%s,%s():Blocking IO\n",  PREFIX_TITLE, __func__);
+			myouti(signal, HW5_IOCSETBLOCK);
+		}
+	}
+
+	if (cmd == HW5_IOCSETIRQOK){
+		// Complete the bonus task 
+		if (signal == 0 || signal == 1){
+			myouti(signal, DMAIRQOKADDR);
+			printk("%s,%s(): IRQ OK\n",  PREFIX_TITLE, __func__);
+		}else{
+			printk("%s,%s(): IRQ not complete \n",  PREFIX_TITLE, __func__);
+			return -1;
+		}
+	}
+
+	if (cmd == HW5_IOCSETIOCOK) {
+		if (signal == 0 || signal == 1){
+			myouti(signal, DMAIOCOKADDR);
+			printk("%s,%s(): IOC OK\n", PREFIX_TITLE, __func__);
+		}else {
+			printk("%s,%s(): IOC not complete\n", PREFIX_TITLE, __func__);
+			return -1;
+		}
+	}
+
+	if (cmd == HW5_IOCWAITREADABLE) {
+		while(IOMode == 0) {
+		//blocking IO
+		msleep(5000);
+		IOMode = myini(DMAREADABLEADDR);
+		}
+
+		put_user(IOMode, (int*) arg);
+		printk("%s,%s(): wait readable 1\n", PREFIX_TITLE, __func__);
+	}
 	
 	
 	return 0;
@@ -181,8 +251,59 @@ static long drv_ioctl(struct file *filp, unsigned int cmd, unsigned long arg) {
 
 static void drv_arithmetic_routine(struct work_struct* ws) {
 	/* Implement arthemetic routine */
-	
+	struct DataIn data;
+	int result;
+
+	data.a = myinc(DMAOPCODEADDR);
+	data.b = myini(DMAOPERANDBADDR);
+	data.c = myini(DMAOPERANDCADDR);
+
+	if (data.a == '+'){
+		result = data.b + data.c;
+	}else if(data.a == '-'){
+		result = data.b - data.c;
+	}else if (data.a == '*'){
+		result = data.b * data.c;
+	}else if (data.a == '/'){
+		result = data.b / data.c;
+	}else if (data.a == p){
+		result = prime(data.b, data.c);
+	}else{
+		result = -1;
+	}
+
+	myouti(result, DMAANSADDR);
+
+	printk("%s:%s(): %d %c %d = %d\n", PREFIX_TITLE, __func__ , operand1, operator, operand2, ans);
+
+	myouti(1, DMAREADABLEADDR);
+
 }
+
+int prime(int base, short nth)
+{
+    int fnd=0;
+    int i, num, isPrime;
+
+    num = base;
+    while(fnd != nth) {
+        isPrime=1;
+        num++;
+        for(i=2;i<=num/2;i++) {
+            if(num%i == 0) {
+                isPrime=0;
+                break;
+            }
+        }
+        
+        if(isPrime) {
+            fnd++;
+        }
+    }
+    return num;
+}
+
+
 
 static int __init init_modules(void) {
     dev_t dev;
