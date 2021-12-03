@@ -33,6 +33,14 @@ MODULE_LICENSE("GPL");
 #define DMAOPERANDCADDR 0x25    // data.c operand2
 void *dma_buf;
 
+#define DEV_NAME "mydev"        // name for alloc_chrdev_region
+#define DEV_BASEMINOR 0         // baseminor for alloc_chrdev_region
+#define DEV_COUNT 1             // count for alloc_chrdev_region
+static int dev_major;
+static int dev_minor;
+static struct cdev *dev_cdev;
+
+
 // Declaration for file operations
 static ssize_t drv_read(struct file *filp, char __user *buffer, size_t, loff_t*);
 static int drv_open(struct inode*, struct file*);
@@ -104,46 +112,134 @@ static int drv_release(struct inode* ii, struct file* ff) {
     	printk("%s:%s(): device close\n", PREFIX_TITLE, __func__);
 	return 0;
 }
+
 static ssize_t drv_read(struct file *filp, char __user *buffer, size_t ss, loff_t* lo) {
+	
 	/* Implement read operation for your device */
+	int IOMode = myini(DMAREADABLEADDR);
+	if (IOMode == 1){ // readable
+		printk("%s,%s(): the answer is %i\n", PREFIX_TITLE, __func__, myini(DMAANSADDR));
+		//put the computation result to user
+		put_user(myini(DMAANSADDR),(int*)buffer);
+		//clean the result
+		myouti(0, DMASTUIDADDR);
+		myouti(0, DMARWOKADDR);
+		myouti(0, DMAIOCOKADDR);
+		myouti(0, DMAIRQOKADDR);
+		myouti(0, DMACOUNTADDR);
+		myouti(0, DMAANSADDR);
+		myouti(0, DMABLOCKADDR);
+		myoutc(NULL, DMAOPCODEADDR);
+		myouti(0, DMAOPERANDBADDR);
+		myouts(0, DMAOPERANDCADDR);
+		
+		//set the readable as false
+		myouti(0, DMAREADABLEADDR);
+
+
+	}
 	return 0;
 }
 static ssize_t drv_write(struct file *filp, const char __user *buffer, size_t ss, loff_t* lo) {
 	/* Implement write operation for your device */
+	struct DataIn data;
+	int IOMode = myini(DMAREADABLEADDR);
+	
+	get_user(data.a, (char*)buffer);
+	get_user(data.b, (int*)buffer + 1);
+	get_user(data.c, (short*)buffer + 2);
+	
+	//write data into DMA buffer with specific port
+	myoutc(data.a, DMAOPCODEADDR);
+	myouti(data.b, DMAOPERANDBADDR);
+	myouts(data.c, DMAOPERANDCADDR);
+	printk("%s,%s():queue work\n", PREFIX_TITLE, __func__);
+
+
+	INIT_work(work_routine, drv_arithmetic_routine);
+
+	if(IOMode) {
+		//Blocking IO
+		prink("%s,%s():block\n", PREFIX_TITLE, __func__);
+		schedule_work(work);
+		flush_schedule_work();
+	}else{
+		//non-blocking IO
+		prink("%s,%s():block\n", PREFIX_TITLE, __func__);
+		schedule_work(work);
+	}
 	return 0;
 }
+
 static long drv_ioctl(struct file *filp, unsigned int cmd, unsigned long arg) {
 	/* Implement ioctl setting for your device */
+	
+	
+	
 	return 0;
 }
 
 static void drv_arithmetic_routine(struct work_struct* ws) {
 	/* Implement arthemetic routine */
+	
 }
 
 static int __init init_modules(void) {
-    
+    dev_t dev;
+	int ret = 0;
 	printk("%s:%s():...............Start...............\n", PREFIX_TITLE, __func__);
+	dev_cdev = cdev_alloc();
 
 	/* Register chrdev */ 
+	ret = alloc_chrdev_region(&dev, DEV_BASEMINOR, DEV_COUNT, DEV_NAME);
+	if (ret){
+		printk("cannot alloc chrdev\n");
+		return ret;
+	}
+	dev_major = MAJOR(dev);
+	dev_minor = MINOR(dev);
+	printk("%s : %s(): register chrdev(%d, %d)\n", PREFIX_TITLE, __func__, dev_major, dev_minor);
 
 	/* Init cdev and make it alive */
+	cdev_init(dev_cdev, &fops);
+	dev_cdev->owner = THIS_MODULE;
 
+	ret = cdev_add(dev_cdev, MKDEV(dev_major, dev_minor), 1);
+	if(ret < 0){
+		printk("add chrdev failed\n");
+		return -1;
+	} 
+	
 	/* Allocate DMA buffer */
+	dma_buf = kzalloc(DMA_BUFSIZE, GFP_KERNEL);
+	printk("%s:%s():allocate dma buffer\n",PREFIX_TITLE, __func__);
 
 	/* Allocate work routine */
-
+	work_routine = kmalloc(sizeof(typeof(*work_routine)), GFP_KERNEL);
+	
 	return 0;
 }
 
 static void __exit exit_modules(void) {
 
-	/* Free DMA buffer when exit modules */
+	dev_t dev;
 
+	dev = MKDEV(dev_major, dev_minor);
+	cdev_del(dev_cdev);
+
+	/* Free DMA buffer when exit modules */
+	kfree(dma_buf);
+	printk("%s:%s():free dma buffer\n",PREFIX_TITLE, __func__);
+
+	
 	/* Delete character device */
+	printk("%s:%s():unregister chrdev\n",PREFIX_TITLE, __func__);
+	unregister_chrdev_region(MKDEV(dev_major, dev_minor), DEV_COUNT);
+	
 
 	/* Free work routine */
-
+	kfree(work_routine);
+	
 
 	printk("%s:%s():..............End..............\n", PREFIX_TITLE, __func__);
 }
