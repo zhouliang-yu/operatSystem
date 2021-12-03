@@ -127,7 +127,7 @@ int main()
 
     int ret;
 
-    ret = 123456789;
+    ret = 120040077;
     if (ioctl(fd, HW5_IOCSETSTUID, &ret) < 0) {
         printf("set stuid failed\n");
         return -1;

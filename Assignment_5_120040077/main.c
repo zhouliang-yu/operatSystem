@@ -274,7 +274,7 @@ static void drv_arithmetic_routine(struct work_struct* ws) {
 
 	myouti(result, DMAANSADDR);
 
-	printk("%s:%s(): %d %c %d = %d\n", PREFIX_TITLE, __func__ , operand1, operator, operand2, ans);
+	printk("%s:%s(): %d %c %d = %d\n", PREFIX_TITLE, __func__ , data.b, data.a, data.c, result);
 
 	myouti(1, DMAREADABLEADDR);
 
