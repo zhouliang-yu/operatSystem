@@ -119,7 +119,7 @@ static ssize_t drv_read(struct file *filp, char __user *buffer, size_t ss, loff_
 	/* Implement read operation for your device */
 	int IOMode = myini(DMAREADABLEADDR);
 	if (IOMode == 1){ // readable
-		printk("%s,%s(): the answer is %i\n", PREFIX_TITLE, __func__, myini(DMAANSADDR));
+		printk("%s:%s(): the answer is %i\n", PREFIX_TITLE, __func__, myini(DMAANSADDR));
 		//put the computation result to user
 		put_user(myini(DMAANSADDR),(int*)buffer);
 		//clean the result
@@ -154,20 +154,20 @@ static ssize_t drv_write(struct file *filp, const char __user *buffer, size_t ss
 	myoutc(data.a, DMAOPCODEADDR);
 	myouti(data.b, DMAOPERANDBADDR);
 	myouts(data.c, DMAOPERANDCADDR);
-	printk("%s,%s():queue work\n", PREFIX_TITLE, __func__);
+	printk("%s:%s():queue work\n", PREFIX_TITLE, __func__);
 
 
-	INIT_work(work_routine, drv_arithmetic_routine);
+	INIT_WORK(work_routine, drv_arithmetic_routine);
 
 	if(IOMode) {
 		//Blocking IO
-		prink("%s,%s():block\n", PREFIX_TITLE, __func__);
-		schedule_work(work);
-		flush_schedule_work();
+		printk("%s:%s():block\n", PREFIX_TITLE, __func__);
+		schedule_work(work_routine);
+		flush_scheduled_work();
 	}else{
 		//non-blocking IO
-		prink("%s,%s():block\n", PREFIX_TITLE, __func__);
-		schedule_work(work);
+		printk("%s:%s():block\n", PREFIX_TITLE, __func__);
+		schedule_work(work_routine);
 	}
 	return 0;
 }
@@ -175,14 +175,14 @@ static ssize_t drv_write(struct file *filp, const char __user *buffer, size_t ss
 static long drv_ioctl(struct file *filp, unsigned int cmd, unsigned long arg) {
 	/* Implement ioctl setting for your device */
 	int IOMode = myini(DMAREADABLEADDR);
-	int ret = (int*)arg;
+	
 	int signal; //store the result of ret to the signal
-	get_user(signal, ret);
+	get_user(signal, (int*)arg);
 
 	if (cmd == HW5_IOCSETSTUID){
 		//STUID 
 		myouti(signal, DMASTUIDADDR);
-		printk("%s,%s(): My student id = <%i>\n", PREFIX_TITLE,__func__, info);
+		printk("%s:%s(): My student id = <%i>\n", PREFIX_TITLE,__func__, signal);
 	}
 
 
@@ -190,10 +190,10 @@ static long drv_ioctl(struct file *filp, unsigned int cmd, unsigned long arg) {
 	{
 		if (signal == 0 || signal == 1){
 			//RW complete
-			printk("%s,%s()RW OK\n", PREFIX_TITLE, __func__);
+			printk("%s:%s()RW OK\n", PREFIX_TITLE, __func__);
 			myouti(signal, DMARWOKADDR);
 		}else{
-			printk("%s,%s(): RW Not Complete\n", PREFIX_TITLE, __func__);
+			printk("%s:%s(): RW Not Complete\n", PREFIX_TITLE, __func__);
 			return -1;
 		}
 	}
@@ -266,7 +266,7 @@ static void drv_arithmetic_routine(struct work_struct* ws) {
 		result = data.b * data.c;
 	}else if (data.a == '/'){
 		result = data.b / data.c;
-	}else if (data.a == p){
+	}else if (data.a == 'p'){
 		result = prime(data.b, data.c);
 	}else{
 		result = -1;
