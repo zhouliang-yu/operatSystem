@@ -35,7 +35,7 @@ void *dma_buf;
 #define DEV_NAME "mydev" // name for alloc_chrdev_region
 #define DEV_BASEMINOR 0	 // baseminor for alloc_chrdev_region
 #define DEV_COUNT 1		 // count for alloc_chrdev_region
-#define INTERRUPT_DEV_NAME "interrupt"
+#define INTERRUPT_DEV_NAME "myinterrupt"
 #define IRQ_NUM 1
 
 static int dev_major;
@@ -347,12 +347,8 @@ int prime(int base, short nth)
 
 static irqreturn_t handler(int irq, void *dev_id)
 {
-	if (irq == IRQ_NUM)
-	{
-		interrupt_t += 1;
-		return IRQ_HANDLED;
-	}
-	return IRQ_NONE;
+	interrupt_t += 1;
+	return IRQ_HANDLED;
 }
 
 static int __init init_modules(void)
